@@ -38,9 +38,15 @@ public class TestCase_1_GoogleSearch extends TestBase{
 
 	}
 	private static WebElement getResultLink(WebDriver driver, Integer index) {
-		return  driver.findElement(By.cssSelector("#rso > div:nth-child(" + index.toString() + ") > div > div > div > div > div.r > a"));
+		return getElementAfterItIsVisible(driver, By.cssSelector("#rso > div:nth-child(" + index.toString() + ") > div > div > div > div > div.r > a"));
 	}
+	private static WebElement getElementAfterItIsVisible(WebDriver driver, By by) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebElement element = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(by));
+		return element;
 
+	}
 
 	@Test
 	public void searchForWinrar() {
@@ -48,10 +54,10 @@ public class TestCase_1_GoogleSearch extends TestBase{
 		log.info("Open Google Search URL.");
 		driver.get("https://www.google.com/");
 		waitForPageLoad(driver);
-		driver.findElement(By.name("q")).sendKeys("winrar");
-		driver.findElement(By.name("btnK")).click();
+		getElementAfterItIsVisible(driver, By.name("q")).sendKeys("winrar");
+		getElementAfterItIsVisible(driver, By.name("btnK")).click();
 		waitForPageLoad(driver);
-		getResultLink(driver, 1).click();
+		getResultLink(driver, 2).click();
 
 	}
 
