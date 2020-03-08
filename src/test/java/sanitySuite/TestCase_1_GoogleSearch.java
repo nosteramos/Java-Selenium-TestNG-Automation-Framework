@@ -1,40 +1,60 @@
 package sanitySuite;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.TestBase;
 import pages.Syn_google_search;
 
+import java.sql.Driver;
+import java.util.List;
 
 
 public class TestCase_1_GoogleSearch extends TestBase{
 
-	Syn_google_search obj_google_search;
+	private static void waitForPageLoad(WebDriver driver) {
+
+		ExpectedCondition<Boolean> expectation = new
+				ExpectedCondition<Boolean>() {
+					public Boolean apply(WebDriver driver) {
+						return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+					}
+				};
+		try {
+			Thread.sleep(1000);
+			WebDriverWait wait = new WebDriverWait(driver, 30);
+			wait.until(expectation);
+		} catch (Throwable error) {
+			Assert.fail("Timeout waiting for Page Load Request to complete.");
+		}
 
 
-	@Test (priority=1, description = "Open Google Search URL")	
-	public void open_url() {
+	}
+	private static WebElement getResultLink(WebDriver driver, Integer index) {
+		return  driver.findElement(By.cssSelector("#rso > div:nth-child(" + index.toString() + ") > div > div > div > div > div.r > a"));
+	}
+
+
+	@Test
+	public void searchForWinrar() {
 
 		log.info("Open Google Search URL.");
-		driver.get(data.getProperty("base.url"));
-
-		log.info("Get input string from properties file and put it into the search box.");
-		obj_google_search = new Syn_google_search (driver);
-		obj_google_search.search_by_first_option(data.getProperty("TestCase_1.searchString_1"));
-		
-		log.info("Assert actual searched string with expected string from properties file.");
-		assertStrings(obj_google_search.get_first_option(),data.getProperty("TestCase_1.assertString_1"));
-
-		//	  Assert.assertTrue(obj_google_search.get_first_option().equals(getPropertyValue("TestCase_1.assertString_1")));
+		driver.get("https://www.google.com/");
+		waitForPageLoad(driver);
+		driver.findElement(By.name("q")).sendKeys("winrar");
+		driver.findElement(By.name("btnK")).click();
+		waitForPageLoad(driver);
+		getResultLink(driver, 1).click();
 
 	}
 
-	@Test (priority=2, description = "Click on first search option")	
-	public void click_first_search_option() {
 
-		log.info("Click on first search option");
-		obj_google_search.click_on_first_search_option();
-
-	}
 
 }

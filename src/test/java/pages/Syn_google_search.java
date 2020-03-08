@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 
 import base.PageBase;
 
+import java.util.List;
+
 
 public class Syn_google_search extends PageBase {
 
@@ -28,8 +30,12 @@ public class Syn_google_search extends PageBase {
 	WebElement searchBox;
 	
 	// Web Element for Google Search first option
+
 	@FindBy(xpath = "//*[@id='tsf']/div[2]/div/div[2]/div[2]/ul/li[1]/div[1]/div/span")
 	WebElement searchFirstOption;
+
+	@FindBy(tagName = "a")
+	List<WebElement> searchResults;
 
 	/*******************************************************************************************
 	 * All Methods for performing actions
@@ -53,7 +59,14 @@ public class Syn_google_search extends PageBase {
 	public void select_first_option(){
 		log.info("Select first option displayed by google search");
 		searchFirstOption.click();
-		
+
+	}
+
+
+	public void select_x_option(int index){
+		log.info("Select " + Integer.toString(index)+ " option displayed by google search");
+		searchResults.get(index).click();
+
 	}
 
 	/*******************************************************************************************
@@ -71,5 +84,11 @@ public class Syn_google_search extends PageBase {
 
 		this.select_first_option();
 		
+	}
+
+	public void click_on_x_search_option (int index) {
+
+		this.select_x_option(index);
+
 	}
 }
