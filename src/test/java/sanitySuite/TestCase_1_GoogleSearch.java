@@ -37,9 +37,15 @@ public class TestCase_1_GoogleSearch extends TestBase{
 
 
 	}
+	
+	private static WebElement[] getResultLinks(WebDriver driver) {
+		return getElementAfterItIsVisible(driver, By.Xpath("//div[@id="rso"]//a[@href]");
+	}
+	
 	private static WebElement getResultLink(WebDriver driver, Integer index) {
 		return getElementAfterItIsVisible(driver, By.cssSelector("#rso > div:nth-child(" + index.toString() + ") > div > div > div > div > div.r > a"));
 	}
+						  
 	private static WebElement getElementAfterItIsVisible(WebDriver driver, By by) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		WebElement element = wait.until(
@@ -57,7 +63,7 @@ public class TestCase_1_GoogleSearch extends TestBase{
 		getElementAfterItIsVisible(driver, By.name("q")).sendKeys("winrar");
 		getElementAfterItIsVisible(driver, By.name("btnK")).click();
 		waitForPageLoad(driver);
-		getResultLink(driver, 2).click();
+		getResultLinks(driver)[2].click();
 
 	}
 
