@@ -11,7 +11,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import base.TestBase;
+import pages.Syn_google_search;
 
+import java.sql.Driver;
 import java.util.List;
 
 
@@ -35,15 +37,9 @@ public class TestCase_1_GoogleSearch extends TestBase{
 
 
 	}
-	
-	private static List<WebElement> getResultLinks(WebDriver driver) {
-		return getElementsAfterThereAre(driver, By.xpath("//div[@id='rso']//a[@href]"), 5);
-	}
-	
 	private static WebElement getResultLink(WebDriver driver, Integer index) {
 		return getElementAfterItIsVisible(driver, By.cssSelector("#rso > div:nth-child(" + index.toString() + ") > div > div > div > div > div.r > a"));
 	}
-
 	private static WebElement getElementAfterItIsVisible(WebDriver driver, By by) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		WebElement element = wait.until(
@@ -51,16 +47,6 @@ public class TestCase_1_GoogleSearch extends TestBase{
 		return element;
 
 	}
-
-	private static List<WebElement> getElementsAfterThereAre(WebDriver driver, By by, int minElms) {
-
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		List<WebElement> elements = wait.until(
-				ExpectedConditions.numberOfElementsToBeMoreThan(by, minElms));
-		return elements;
-
-	}
-
 
 	@Test
 	public void searchForWinrar() {
