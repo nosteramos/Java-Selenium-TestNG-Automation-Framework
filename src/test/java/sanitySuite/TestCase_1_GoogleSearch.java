@@ -39,7 +39,7 @@ public class TestCase_1_GoogleSearch extends TestBase{
 	}
 	
 	private static WebElement[] getResultLinks(WebDriver driver) {
-		return getElementAfterItIsVisible(driver, By.xPath("//div[@id="rso"]//a[@href]");
+		return getElementAfterItIsVisible(driver, By.xpath("//div[@id="rso"]//a[@href]");
 	}
 	
 	private static WebElement getResultLink(WebDriver driver, Integer index) {
